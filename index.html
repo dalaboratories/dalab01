@@ -37,7 +37,7 @@
 
       const loader = new GLTFLoader();
       loader.load(
-        'suzanne_3d.glb', // Passe den Dateinamen an deinen an!
+        'suzanne_3d.glb', // <- Stelle sicher, dass model.glb im Root des Repos liegt
         function (gltf) {
           scene.add(gltf.scene);
         },
