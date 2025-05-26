@@ -34,6 +34,14 @@
 
       const controls = new OrbitControls(camera, renderer.domElement);
       controls.enableDamping = true;
+	  
+	  // Nach scene-Setup:
+	  
+	// Nach scene-Setup:
+	const geometry = new THREE.BoxGeometry();
+	const material = new THREE.MeshStandardMaterial({ color: 0x44aa88 });
+	const cube = new THREE.Mesh(geometry, material);
+	scene.add(cube);
 
       const loader = new GLTFLoader();
       loader.load(
@@ -54,6 +62,8 @@
       });
 
       function animate() {
+		cube.rotation.x += 0.01;
+		cube.rotation.y += 0.01;
         requestAnimationFrame(animate);
         controls.update();
         renderer.render(scene, camera);
