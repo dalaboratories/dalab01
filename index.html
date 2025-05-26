@@ -9,15 +9,11 @@
     </style>
   </head>
   <body>
-    <!-- Import Three.js from CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.min.js"></script>
-    <!-- Import OrbitControls -->
-    <script src="https://cdn.jsdelivr.net/npm/three@0.160.1/examples/js/controls/OrbitControls.js"></script>
-    <!-- Import GLTFLoader -->
-    <script src="https://cdn.jsdelivr.net/npm/three@0.160.1/examples/js/loaders/GLTFLoader.js"></script>
+    <script type="module">
+      import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.1/build/three.module.js';
+      import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.160.1/examples/jsm/controls/OrbitControls.js';
+      import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.160.1/examples/jsm/loaders/GLTFLoader.js';
 
-    <script>
-      // Scene setup
       const scene = new THREE.Scene();
       scene.background = new THREE.Color(0x111111);
 
@@ -29,7 +25,6 @@
       renderer.setPixelRatio(window.devicePixelRatio);
       document.body.appendChild(renderer.domElement);
 
-      // Lighting
       const light = new THREE.DirectionalLight(0xffffff, 1);
       light.position.set(2, 4, 5);
       scene.add(light);
@@ -37,32 +32,27 @@
       const ambient = new THREE.AmbientLight(0x404040, 2);
       scene.add(ambient);
 
-      // Orbit controls
-      const controls = new THREE.OrbitControls(camera, renderer.domElement);
+      const controls = new OrbitControls(camera, renderer.domElement);
       controls.enableDamping = true;
 
-      // Load GLB model
-      const loader = new THREE.GLTFLoader();
+      const loader = new GLTFLoader();
       loader.load(
-        'suzanne_3d.glb', // Replace with your actual file name
+        'suzanne_3d.glb', // passe das an deinen Dateinamen an
         function (gltf) {
-          const model = gltf.scene;
-          scene.add(model);
+          scene.add(gltf.scene);
         },
         undefined,
         function (error) {
-          console.error('An error occurred:', error);
+          console.error('Fehler beim Laden des Modells:', error);
         }
       );
 
-      // Resize handler
       window.addEventListener('resize', () => {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
       });
 
-      // Render loop
       function animate() {
         requestAnimationFrame(animate);
         controls.update();
